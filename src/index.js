@@ -1,10 +1,26 @@
 import "./styles.css";
 
-document.getElementById("app").innerHTML = `
-<h1>Hello Vanilla!</h1>
-<div>
-  We use the same configuration as Parcel to bundle this sandbox, you can find more
-  info about Parcel 
-  <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-</div>
-`;
+const onClickAdd = () => {
+  //テキストボックスの値を取得し、初期化する
+  const inputText = document.getElementById("add-text").value;
+  document.getElementById("add-text").value = "";
+
+  //jsでDOMを作成するときはcreateElementという関数を使う
+  //divタグ生成
+  const div = document.createElement("div");
+  div.className = "list-row";
+
+  //liタグ（リスト）を生成
+  const li = document.createElement("li");
+  li.innerText = inputText;
+
+  //divタグの子要素(下)に各要素（ここではliタグ）を設定する
+  div.appendChild(li);
+
+  //未完了リストの下に追加
+  document.getElementById("incomplete-list").appendChild(div);
+};
+
+document
+  .getElementById("add-button")
+  .addEventListener("click", () => onClickAdd());
