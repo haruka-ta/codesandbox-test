@@ -5,6 +5,28 @@ const onClickAdd = () => {
   const inputText = document.getElementById("add-text").value;
   document.getElementById("add-text").value = "";
 
+  createIncompleteList(inputText);
+};
+
+const onClickReturn = () => {
+  const returnButton = document.getElementById("return-button");
+  const completeList = document.getElementById("complete-list");
+  const child_li = completeList.firstChild;
+  console.log(child_li);
+  //完了リストから削除
+  const returnParent = returnButton.parentNode;
+  completeList.removeChild(returnParent);
+
+  //未完了へ追加する
+};
+
+//完了リストから指定の要素を削除
+const deleteFromIncompleteList = (target) => {
+  document.getElementById("incomplete-list").removeChild(target);
+};
+
+//未完了リストに追加する関数
+const createIncompleteList = (text) => {
   //jsでDOMを作成するときはcreateElementという関数を使う
   //divタグ生成
   const div = document.createElement("div");
@@ -12,7 +34,7 @@ const onClickAdd = () => {
 
   //liタグ（リスト）を生成
   const li = document.createElement("li");
-  li.innerText = inputText;
+  li.innerText = text;
 
   //button(完了)タグ生成
   const completeButton = document.createElement("button");
@@ -34,7 +56,15 @@ const onClickAdd = () => {
     //buttonタグ生成
     const backButton = document.createElement("button");
     backButton.innerText = "戻す";
+    backButton.addEventListener("click", () => {
+      //押された戻すボタンの親タグ（div）を完了リストから削除
+      const deleteTarget = backButton.parentNode;
+      document.getElementById("complete-list").removeChild(deleteTarget);
 
+      //テキスト取得
+      const text = backButton.parentNode.firstChild.innerText;
+      createIncompleteList(text);
+    });
     //divタグの子要素に各要素を設定
     addTarget.appendChild(li);
     addTarget.appendChild(backButton);
@@ -59,23 +89,6 @@ const onClickAdd = () => {
 
   //未完了リストの下に追加
   document.getElementById("incomplete-list").appendChild(div);
-};
-
-const onClickReturn = () => {
-  const returnButton = document.getElementById("return-button");
-  const completeList = document.getElementById("complete-list");
-  const child_li = completeList.firstChild;
-  console.log(child_li);
-  //完了リストから削除
-  const returnParent = returnButton.parentNode;
-  completeList.removeChild(returnParent);
-
-  //未完了へ追加する
-};
-
-//完了リストから指定の要素を削除
-const deleteFromIncompleteList = (target) => {
-  document.getElementById("incomplete-list").removeChild(target);
 };
 
 document
